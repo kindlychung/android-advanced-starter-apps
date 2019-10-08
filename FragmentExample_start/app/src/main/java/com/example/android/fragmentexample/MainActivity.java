@@ -16,14 +16,73 @@
 
 package com.example.android.fragmentexample;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity {
+
+    Button button;
+    FrameLayout container;
+    boolean showingQuestions = false;
+    private final String SHOWING_QUESTIONS = "showingQuestions";
+
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putBoolean(SHOWING_QUESTIONS, showingQuestions);
+        super.onSaveInstanceState(savedInstanceState);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        container = findViewById(R.id.fragment_container);
+        button = findViewById(R.id.button);
+
+        if (savedInstanceState != null) {
+            showingQuestions =
+                    savedInstanceState.getBoolean(SHOWING_QUESTIONS);
+            toggleQuestions(showingQuestions);
+            setButtonText();
+        }
+
+        button.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                toggleQuestions(!showingQuestions);
+                showingQuestions = !showingQuestions;
+                setButtonText();
+            }
+        });
+    }
+
+    private void setButtonText() {
+        if (showingQuestions) button.setText(R.string.close);
+        else button.setText(R.string.open);
+    }
+
+    private void toggleQuestions(boolean on) {
+        FragmentManager manager = getSupportFragmentManager();
+        if (on) {
+            manager
+                    .beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .replace(R.id.fragment_container, new SimpleFragment())
+                    .addToBackStack("show_questions")
+                    .commit();
+        } else {
+            manager
+                    .beginTransaction()
+                    .remove(
+                            manager.findFragmentById(R.id.fragment_container)
+                    )
+                    .addToBackStack("hide_questions")
+                    .commit();
+        }
     }
 }

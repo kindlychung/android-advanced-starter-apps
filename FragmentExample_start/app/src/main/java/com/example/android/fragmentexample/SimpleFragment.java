@@ -41,7 +41,7 @@ public class SimpleFragment extends Fragment {
                     float v,
                     boolean b
             ) {
-                Toast.makeText(getContext(), "Rating: " + ratingBar.getRating(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Rating: " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
             }
         });
 
