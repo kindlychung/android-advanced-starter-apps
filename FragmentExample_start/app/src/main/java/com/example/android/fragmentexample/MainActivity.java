@@ -23,8 +23,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SimpleFragment.OnFragmentInteractionListener{
 
     Button button;
     FrameLayout container;
@@ -84,5 +85,10 @@ public class MainActivity extends AppCompatActivity {
                     .addToBackStack("hide_questions")
                     .commit();
         }
+    }
+
+    @Override
+    public void onRadioButtonChoice(int choice) {
+        Toast.makeText(this, "Choice is " + choice, Toast.LENGTH_SHORT).show();
     }
 }

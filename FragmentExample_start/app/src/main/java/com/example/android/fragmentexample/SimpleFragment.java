@@ -1,5 +1,6 @@
 package com.example.android.fragmentexample;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,17 +12,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class SimpleFragment extends Fragment {
-    private static final int YES = 0;
-    private static final int NO = 1;
+    private final static int YES = 0;
+    private final static int NO = 1;
+    private final static int NONE = -1;
+    private int radioButtonChoice = NONE;
+    private OnFragmentInteractionListener listener;
 
     public SimpleFragment() {
         // Required empty public constructor
     }
+    private final static String CHOICE = "choice";
+    public SimpleFragment newInstance(int choice) {
+        SimpleFragment fragment = new SimpleFragment();
+        Bundle arguments = new Bundle();
+        arguments.putInt(CHOICE, choice);
+        fragment.setArguments(arguments);
+        return fragment;
+    }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof OnFragmentInteractionListener) {
+            listener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new ClassCastException("Context does not implement OnFragmentInteractionListener");
+        }
+    }
 
     @Override
     public View onCreateView(
@@ -57,18 +75,27 @@ public class SimpleFragment extends Fragment {
                         TextView textView =
                                 rootView.findViewById(R.id.fragment_header);
                         switch (index) {
-                            case YES: // User chose "Yes."
+                            case 0: // User chose "Yes."
                                 textView.setText(R.string.yes_message);
+                                radioButtonChoice = YES;
+                                listener.onRadioButtonChoice(YES);
                                 break;
-                            case NO: // User chose "No."
+                            case 1: // User chose "No."
                                 textView.setText(R.string.no_message);
+                                radioButtonChoice = NO;
+                                listener.onRadioButtonChoice(NO);
                                 break;
                             default: // No choice made.
-                                // Do nothing.
+                                radioButtonChoice = NONE;
+                                listener.onRadioButtonChoice(NONE);
                                 break;
                         }
                     }
                 });
         return rootView;
+    }
+
+    interface OnFragmentInteractionListener {
+        void onRadioButtonChoice(int choice);
     }
 }
