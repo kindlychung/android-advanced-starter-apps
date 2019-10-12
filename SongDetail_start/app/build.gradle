@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.android.songs"
+        applicationId "com.example.android.songdetailstart"
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -15,13 +15,34 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
+    flavorDimensions "stage"
+    productFlavors {
+        dev {
+            dimension "stage"
+            minSdkVersion 21
+            versionNameSuffix "-dev"
+            applicationIdSuffix '.dev'
+            resConfigs "en", "xhdpi"
+        }
+        prod {
+            dimension "stage"
+        }
+    }
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.0.1'
-    implementation 'com.android.support:support-fragment:26.0.1'
-    implementation 'com.android.support:support-v4:26.0.1'
-    implementation 'com.android.support:recyclerview-v7:26.0.1'
-    implementation 'com.android.support:design:26.0.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-fragment:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+}
+
+task startDev(type: Exec) {
+    dependsOn 'installDevDebug'
+    commandLine 'adb', '-s', 'emulator-5554', 'shell', 'am', 'start', '-n', "${android.defaultConfig.applicationId}.dev/${android.defaultConfig.applicationId}.MainActivity", '-a', 'android.intent.action.MAIN', '-c', 'android.intent.category.LAUNCHER'
 }

@@ -16,6 +16,8 @@
 
 package com.example.android.songdetailstart.content;
 
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
