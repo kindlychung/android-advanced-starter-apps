@@ -13,9 +13,9 @@ import android.widget.Toast;
 
 
 public class SimpleFragment extends Fragment {
-    private final static int YES = 0;
-    private final static int NO = 1;
-    private final static int NONE = -1;
+    public final static int YES = 0;
+    public final static int NO = 1;
+    public final static int NONE = -1;
     private int radioButtonChoice = NONE;
     private OnFragmentInteractionListener listener;
 
@@ -75,12 +75,12 @@ public class SimpleFragment extends Fragment {
                         TextView textView =
                                 rootView.findViewById(R.id.fragment_header);
                         switch (index) {
-                            case 0: // User chose "Yes."
+                            case YES: // User chose "Yes."
                                 textView.setText(R.string.yes_message);
                                 radioButtonChoice = YES;
                                 listener.onRadioButtonChoice(YES);
                                 break;
-                            case 1: // User chose "No."
+                            case NO: // User chose "No."
                                 textView.setText(R.string.no_message);
                                 radioButtonChoice = NO;
                                 listener.onRadioButtonChoice(NO);

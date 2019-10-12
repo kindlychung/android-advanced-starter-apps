@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements SimpleFragment.On
     FrameLayout container;
     boolean showingQuestions = false;
     private final String SHOWING_QUESTIONS = "showingQuestions";
+    private int simpleFragRadioChoice = SimpleFragment.NONE;
 
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putBoolean(SHOWING_QUESTIONS, showingQuestions);
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements SimpleFragment.On
 
     @Override
     public void onRadioButtonChoice(int choice) {
-        Toast.makeText(this, "Choice is " + choice, Toast.LENGTH_SHORT).show();
+        simpleFragRadioChoice = choice;
+        Toast.makeText(this, "Liu choice: " + choice, Toast.LENGTH_SHORT).show();
     }
 }
