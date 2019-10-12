@@ -18,23 +18,24 @@ public class SimpleFragment extends Fragment {
     public final static int NONE = -1;
     private int radioButtonChoice = NONE;
     private OnFragmentInteractionListener listener;
+    public final static String CHOICE_FIELD = "choice";
 
     public SimpleFragment() {
         // Required empty public constructor
     }
-    private final static String CHOICE = "choice";
-    public SimpleFragment newInstance(int choice) {
+
+    public static SimpleFragment newInstance(int choice) {
         SimpleFragment fragment = new SimpleFragment();
-        Bundle arguments = new Bundle();
-        arguments.putInt(CHOICE, choice);
-        fragment.setArguments(arguments);
+        Bundle bundle = new Bundle();
+        bundle.putInt(CHOICE_FIELD, choice);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof OnFragmentInteractionListener) {
+        if (context instanceof OnFragmentInteractionListener) {
             listener = (OnFragmentInteractionListener) context;
         } else {
             throw new ClassCastException("Context does not implement OnFragmentInteractionListener");
@@ -52,6 +53,17 @@ public class SimpleFragment extends Fragment {
         final RadioGroup radioGroup = rootView.findViewById(R.id.radio_group);
         final RatingBar ratingBar = rootView.findViewById(R.id.song_rating);
 
+        if (getArguments().containsKey(CHOICE_FIELD)) {
+            radioButtonChoice = getArguments().getInt(CHOICE_FIELD);
+            if (radioButtonChoice != NONE) {
+                radioGroup.check(
+                        radioGroup
+                                .getChildAt(radioButtonChoice)
+                                .getId()
+                );
+            }
+        }
+
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(
@@ -59,7 +71,9 @@ public class SimpleFragment extends Fragment {
                     float v,
                     boolean b
             ) {
-                Toast.makeText(getContext(), "Rating: " + ratingBar.getRating(), Toast.LENGTH_SHORT).show();
+                Toast
+                        .makeText(getContext(), "Rating: " + ratingBar.getRating(), Toast.LENGTH_SHORT)
+                        .show();
             }
         });
 

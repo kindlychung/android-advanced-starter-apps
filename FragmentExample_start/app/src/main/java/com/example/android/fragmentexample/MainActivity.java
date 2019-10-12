@@ -71,10 +71,11 @@ public class MainActivity extends AppCompatActivity implements SimpleFragment.On
     private void toggleQuestions(boolean on) {
         FragmentManager manager = getSupportFragmentManager();
         if (on) {
+            SimpleFragment fragment = SimpleFragment.newInstance(simpleFragRadioChoice);
             manager
                     .beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .replace(R.id.fragment_container, new SimpleFragment())
+                    .replace(R.id.fragment_container, fragment)
                     .addToBackStack("show_questions")
                     .commit();
         } else {
