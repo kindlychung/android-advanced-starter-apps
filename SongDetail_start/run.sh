@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
 ./gradlew \
-  --build-cache \
-  --configure-on-demand \
   --parallel \
   --offline \
-  -x lint -x lintVitalDevRelease \
+  -Pnolint \
+  -Pnorelease \
   --continuous \
+  --profile \
   :app:startDev
+#  --build-cache \
+#  --configure-on-demand \

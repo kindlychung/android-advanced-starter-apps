@@ -19,15 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.example.android.songdetailstart.SongDetailActivity"
-            android:label="@string/title_song_detail"
-            android:parentActivityName="com.example.android.songdetailstart.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.songdetailstart.MainActivity" />
-        </activity>
     </application>
 
 </manifest>

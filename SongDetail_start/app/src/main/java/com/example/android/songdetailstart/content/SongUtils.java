@@ -23,6 +23,7 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Helper class for providing sample song content.
  */
@@ -35,7 +36,7 @@ public class SongUtils {
     public static final String SONG_ID_KEY = "item_id";
 
     // The number of songs.
-    private static final int COUNT = 7;
+    private static final int COUNT = 8;
 
     /**
      * A Song item represents a song title, and song details.
@@ -95,6 +96,10 @@ public class SongUtils {
             case 5:
                 newTitle = "Leave My Kitten Alone";
                 newDetail = "Leave My Kitten Alone\n\nOne of the lost Beatle songs recorded during the “Beatles For Sale” sessions but never released. This song, written by Little Willie John, Titus Turner, and James McDougal, was a 1959 R&B hit for Little Willie John and covered by Johnny Preston before the Beatles tried it and shelved it. A reference to a “big fat bulldog” may have influenced John’s “Hey Bulldog” (Yellow Submarine album), which is a similar rocker.";
+                break;
+            case 6:
+                newTitle = "Leave My Kitten Alone4";
+                newDetail = "Leave My Kitten Alone2\n\nOne of the lost Beatle songs recorded during the “Beatles For Sale” sessions but never released. This song, written by Little Willie John, Titus Turner, and James McDougal, was a 1959 R&B hit for Little Willie John and covered by Johnny Preston before the Beatles tried it and shelved it. A reference to a “big fat bulldog” may have influenced John’s “Hey Bulldog” (Yellow Submarine album), which is a similar rocker.";
                 break;
             default:
                 newTitle = "One After 909";

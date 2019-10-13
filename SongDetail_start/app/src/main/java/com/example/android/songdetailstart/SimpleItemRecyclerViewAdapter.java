@@ -3,6 +3,7 @@ package com.example.android.songdetailstart;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,7 +26,11 @@ class SimpleItemRecyclerViewAdapter
     private final boolean twoPane;
     private final AppCompatActivity context;
 
-    SimpleItemRecyclerViewAdapter(AppCompatActivity ctx, List<SongUtils.Song> items, boolean twoPane) {
+    SimpleItemRecyclerViewAdapter(
+            AppCompatActivity ctx,
+            List<SongUtils.Song> items,
+            boolean twoPane
+    ) {
         values = items;
         this.twoPane = twoPane;
         context = ctx;
@@ -60,25 +65,23 @@ class SimpleItemRecyclerViewAdapter
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int selectedSong = holder.getAdapterPosition();
+                SongDetailFragment fragment = SongDetailFragment.newInstance(selectedSong);
+                FragmentTransaction transaction = context
+                        .getSupportFragmentManager()
+                        .beginTransaction();
                 if (twoPane) {
-                    int selectedSong = holder.getAdapterPosition();
-                    SongDetailFragment fragment = SongDetailFragment.newInstance(selectedSong);
-                    context.getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.song_detail_container, fragment)
-                            .addToBackStack("song_detail")
-                            .commit();
+                    transaction.replace(R.id.song_detail_container, fragment);
                 } else {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context,
-                            SongDetailActivity.class);
-                    intent.putExtra(SongUtils.SONG_ID_KEY,
-                            holder.getAdapterPosition());
-                    context.startActivity(intent);
+                    transaction.replace(R.id.frameLayout, fragment);
                 }
+                transaction
+                        .addToBackStack("song_detail")
+                        .commit();
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -99,3 +102,5 @@ class SimpleItemRecyclerViewAdapter
         }
     }
 }
+
+

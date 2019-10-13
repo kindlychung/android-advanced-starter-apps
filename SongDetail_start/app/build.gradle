@@ -21,7 +21,6 @@ android {
     productFlavors {
         dev {
             dimension "stage"
-            minSdkVersion 21
             versionNameSuffix "-dev"
             applicationIdSuffix '.dev'
             resConfigs "en", "xhdpi"
@@ -30,6 +29,11 @@ android {
             dimension "stage"
         }
     }
+//    android.variantFilter { variant ->
+//        if(variant.buildType.name == 'release') {
+//            variant.setIgnore(true)
+//        }
+//    }
 
 }
 
@@ -42,7 +46,24 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
 }
 
+
+//task installDev(type: Exec) {
+//    dependsOn 'assembleDev'
+////    commandLine 'adb',  '-s', 'emulator-5554', 'uninstall', "${android.defaultConfig.applicationId}.dev"
+//    commandLine 'adb',  '-s', 'emulator-5554', 'install', '-r', '-t', "${projectDir}/build/outputs/apk/dev/debug/app-dev-debug.apk"
+//}
+
 task startDev(type: Exec) {
-    dependsOn 'installDevDebug'
+    dependsOn "installDevDebug"
     commandLine 'adb', '-s', 'emulator-5554', 'shell', 'am', 'start', '-n', "${android.defaultConfig.applicationId}.dev/${android.defaultConfig.applicationId}.MainActivity", '-a', 'android.intent.action.MAIN', '-c', 'android.intent.category.LAUNCHER'
+}
+gradle.taskGraph.whenReady { graph ->
+    // give -Pnolint on the ./gradlew commandline to disable linting
+    if (project.hasProperty('nolint')) {
+        graph.allTasks.findAll { it.name ==~ /(?i)lint.*/ }*.enabled = false
+    }
+    // give -Pnorelease on the ./gradlew commandline to disable any task related to the release build
+    if (project.hasProperty('norelease')) {
+        graph.allTasks.findAll { it.name ==~ /(?i).*release.*/ }*.enabled = false
+    }
 }
