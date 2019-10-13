@@ -16,7 +16,9 @@
 
 package com.example.android.songdetailstart.content;
 
+import android.app.Activity;
 import android.os.Parcelable;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
