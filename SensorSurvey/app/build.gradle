@@ -50,5 +50,6 @@ dependencies {
 
 task startDev(type: Exec) {
     dependsOn 'installDevDebug'
-    commandLine 'adb', '-s', 'emulator-5554', 'shell', 'am', 'start', '-n', "${android.defaultConfig.applicationId}.dev/${android.defaultConfig.applicationId}.MainActivity", '-a', 'android.intent.action.MAIN', '-c', 'android.intent.category.LAUNCHER'
+//    commandLine 'adb', '-s', 'emulator-5554', 'shell', 'am', 'start', '-n', "${android.defaultConfig.applicationId}.dev/${android.defaultConfig.applicationId}.MainActivity", '-a', 'android.intent.action.MAIN', '-c', 'android.intent.category.LAUNCHER'
+
 }
